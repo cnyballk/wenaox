@@ -1,0 +1,9 @@
+{
+  "name": "wenaox",
+  "version": "0.0.1",
+  "description": "WeChat state management",
+  "miniprogram": "dist",
+  "main": "dist/index.js",
+  "devDependencies": {},
+  "dependencies": {}
+}

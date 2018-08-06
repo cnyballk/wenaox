@@ -1,5 +1,17 @@
 import produce from './immer.js';
 //////////////////// util
+const isEmptyArray = arr => {
+  return isArray(arr) ? arr.length === 0 : true;
+};
+const toType = obj => {
+  return {}.toString
+    .call(obj)
+    .match(/\s([a-zA-Z]+)/)[1]
+    .toLowerCase();
+};
+const isArray = x => {
+  return toType(x) === 'array';
+};
 const breakUpContros = contros => {
   if (contros.state) {
     return contros;
@@ -18,10 +30,15 @@ const breakUpContros = contros => {
 
 //////////////// Store
 export class Store {
-  constructor(contros) {
+  constructor(contros, middlewares) {
     const { state, methods } = breakUpContros(contros);
-    console.log(state, methods);
     this.state = state;
+    this.middlewares = isEmptyArray(middlewares) ? false : middlewares;
+    //绑定中间件
+    this.bindMiddlewares =
+      this.middlewares &&
+      this.middlewares.map(fn => fn(this)).reduce((a, b) => p => a(b(p)));
+    // 绑定方法
     this.methods = this.notify(methods);
     this.listeners = [];
   }
@@ -37,15 +54,20 @@ export class Store {
   bindMethods(methods, method) {
     const c = {};
     const that = this;
+
     for (const syncs in methods.syncs) {
-      c[syncs] = payload => {
+      // 留存next函数
+      const next = payload => {
         const newState = produce(methods.syncs[syncs]).bind(
           this,
           method ? that.state[method] : that.state
         )(payload);
         method ? (that.state[method] = newState) : (this.state = newState);
+
         this.listeners.forEach(fn => fn());
       };
+      // 使用中间件
+      c[syncs] = this.bindMiddlewares ? this.bindMiddlewares(next) : next;
     }
     for (const async in methods.asyncs) {
       c[async] = payload => {

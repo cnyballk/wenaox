@@ -30,6 +30,8 @@ yarn add wenaox
 
 #### 在 app.js 中
 
+> 使用 Provider 注入 store
+
 ```js
 import { Store, Provider } from 'wenaox';
 
@@ -52,7 +54,15 @@ const methods = {
     },
   },
 };
-const store = new Store({ state, methods });
+//一个打印state改变前后的log中间件
+const log = store => next => payload => {
+  console.group('state改变前：', store.state);
+  next(payload);
+  console.log('state改变后：', store.state);
+  console.groupEnd();
+};
+//使用Store注册store  第一个参数为控制器对象，第二个参数为中间件数组
+const store = new Store({ state, methods }, [log]);
 
 const appConfig = {
   //some config
@@ -61,6 +71,8 @@ App(Provider(store)(appConfig));
 ```
 
 #### 在 page/index.js 中
+
+> 使用 orm 往 page 中注入 state 以及 methods
 
 ```js
 import { orm } from 'wenaox';
@@ -87,4 +99,28 @@ Page(orm(mapState, mapMethods)(pageConfig));
 <view bindtap="addCount">count + 1</view>
 <view bindtap="asyncAddCount">async count + 1</view>
 <view bindtap="subtractCount">count - 1</view>
+```
+
+v0.2.0 增加了映射到 Component 的方法 ormComp
+
+#### 在 一个 components 的 js 文件中
+
+> 使用 ormComp 往 page 中注入 state 以及 methods 使用方法一样
+
+```js
+import { ormComp } from 'wenaox';
+
+const mapState = state => ({
+  count: state.count,
+});
+const mapMethods = methods => ({
+  addCount: methods.addCount,
+  subtractCount: methods.subtractCount,
+  asyncAddCount: methods.asyncAddCount,
+});
+const compConfig = {
+  //some config
+};
+
+Component(ormComp(mapState, mapMethods)(compConfig));
 ```

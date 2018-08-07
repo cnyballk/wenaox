@@ -94,7 +94,7 @@ export class Store {
   }
 }
 ////////////////////////////////////////////////////////////////
-//////////////// orm  映射methods以及state
+//////////////// orm  用于page 映射methods以及state
 export const orm = (mapState, mapMethods) => pageConfig => {
   const app = getApp();
   const store = app.store;
@@ -124,6 +124,40 @@ export const orm = (mapState, mapMethods) => pageConfig => {
   return Object.assign({}, pageConfig, mapMethods(app.store.methods), {
     onLoad,
     onUnload,
+  });
+};
+
+////////////////////////////////////////////////////////////////
+//////////////// ormComp   用于Componet 映射methods以及state
+export const ormComp = (mapState, mapMethods) => compConfig => {
+  const app = getApp();
+  const store = app.store;
+
+  function update() {
+    const state = store.state;
+    const mappedState = mapState(state);
+    this.setData(mappedState);
+  }
+
+  const {
+    ready: _ready = () => {},
+    detached: _detached = () => {},
+  } = compConfig;
+
+  function ready() {
+    store.listen(update.bind(this));
+    update.call(this);
+    _ready.call(this);
+  }
+
+  function detached() {
+    _detached.call(this);
+    store.unListen(update);
+  }
+  return Object.assign({}, compConfig, {
+    methods: Object.assign(compConfig.methods, mapMethods(app.store.methods)),
+    ready,
+    detached,
   });
 };
 

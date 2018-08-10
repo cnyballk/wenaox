@@ -70,7 +70,7 @@ export class Store {
       c[syncs] = this.bindMiddlewares ? this.bindMiddlewares(next) : next;
     }
     for (const async in methods.asyncs) {
-      c[async] = payload => {
+      return c[async] = payload => {
         methods.asyncs[async].bind(
           method ? this.methods[method] : this.methods,
           payload,

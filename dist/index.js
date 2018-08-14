@@ -90,7 +90,6 @@ export class Store {
         c[method] = this.bindMethods(methods[method], method);
       }
     }
-    _methods = c;
     return c;
   }
 }

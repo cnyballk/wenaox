@@ -12,7 +12,7 @@
 
 wechat state management
 
-> [renaox][renaox-url] 的小程序版本
+> 本次 v0.3.0 修改 优化性能 onHide 后取消监听 onShow 后继续监听
 
 ## Install
 

@@ -43,10 +43,10 @@ export class Store {
     this.listeners = [];
   }
   listen(listener) {
-    return this.listeners.push(listener);
+    this.listeners.push(listener);
   }
   unListen(listener) {
-    return this.listeners.filter(fn => fn !== listener);
+    this.listeners = this.listeners.filter(fn => fn !== listener);
   }
   getState() {
     return this.state;
@@ -70,15 +70,15 @@ export class Store {
       c[syncs] = this.bindMiddlewares ? this.bindMiddlewares(next) : next;
     }
     for (const async in methods.asyncs) {
-      return c[async] = payload => {
-        methods.asyncs[async].bind(
+      c[async] = payload => {
+        return methods.asyncs[async].bind(
           method ? this.methods[method] : this.methods,
           payload,
           this.state
         )();
-        this.listeners.forEach(fn => fn());
       };
     }
+
     return c;
   }
   notify(methods) {
@@ -90,6 +90,7 @@ export class Store {
         c[method] = this.bindMethods(methods[method], method);
       }
     }
+    _methods = c;
     return c;
   }
 }
@@ -98,25 +99,43 @@ export class Store {
 export const orm = (mapState, mapMethods) => pageConfig => {
   const app = getApp();
   const store = app.store;
-
-  function update(options) {
-    const state = store.state;
-    const mappedState = mapState(state, options);
-    this.setData(mappedState);
-  }
-
+  let __isHide__ = false;
+  let update;
   const {
     onLoad: _onLoad = () => {},
     onUnload: _onUnload = () => {},
+    onShow: _onShow = () => {},
+    onHide: _onHide = () => {},
   } = pageConfig;
 
   function onLoad(options) {
-    store.listen(update.bind(this, options));
+    update = function(options) {
+      const state = store.state;
+      const newState = mapState(state, options);
+      this.setData(newState);
+    }.bind(this, options);
+
+    store.listen(update);
     update.call(this, options);
     _onLoad.call(this, options);
   }
 
-  function onUnload(options) {
+  function onShow() {
+    if (!__isHide__) return;
+
+    __isHide__ = false;
+    store.listen(update);
+    update.call(this);
+    _onShow.call(this);
+  }
+
+  function onHide() {
+    __isHide__ = true;
+    _onHide.call(this);
+    store.unListen(update);
+  }
+
+  function onUnload() {
     _onUnload.call(this);
     store.unListen(update);
   }
@@ -124,6 +143,8 @@ export const orm = (mapState, mapMethods) => pageConfig => {
   return Object.assign({}, pageConfig, mapMethods(app.store.methods), {
     onLoad,
     onUnload,
+    onShow,
+    onHide,
   });
 };
 
@@ -132,12 +153,7 @@ export const orm = (mapState, mapMethods) => pageConfig => {
 export const ormComp = (mapState, mapMethods) => compConfig => {
   const app = getApp();
   const store = app.store;
-
-  function update() {
-    const state = store.state;
-    const mappedState = mapState(state);
-    this.setData(mappedState);
-  }
+  let update;
 
   const {
     ready: _ready = () => {},
@@ -145,7 +161,13 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
   } = compConfig;
 
   function ready() {
-    store.listen(update.bind(this));
+    update = function() {
+      const state = store.state;
+      const newState = mapState(state);
+      this.setData(newState);
+    }.bind(this);
+
+    store.listen(update);
     update.call(this);
     _ready.call(this);
   }

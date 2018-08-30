@@ -12,9 +12,17 @@
 
 wechat state management
 
-> 本次 v0.3.0 修改 优化性能 onHide 后取消监听 onShow 后继续监听
+> 本次 v0.3.2
+> 继续优化了 orm 和 ormComp 的性能，以及加入 loading
 
-## Install
+### 特点
+
+- 支持中间件
+- 中大型项目可多个 contro 区分模块
+- asyncs 自带 loading
+- 轻量、性能好
+
+### 安装
 
 ```bash
 npm i -S wenaox
@@ -48,17 +56,20 @@ const methods = {
       state.count = state.count - 1;
     },
   },
-  asyncs: {
-    asyncAddCount(payload, rootState) {
-      setTimeout(this.addCount, 1e3);
-    },
+  async asyncAddCount(payload, rootState) {
+    const c = await new Promise(resolve => {
+      setTimeout(() => {
+        resolve(1);
+      }, 2e3);
+    });
+    this.addCount(c);
   },
 };
 //一个打印state改变前后的log中间件
-const log = store => next => payload => {
-  console.group('state改变前：', store.state);
-  next(payload);
-  console.log('state改变后：', store.state);
+const log = store => fn => next => payload => {
+  console.group('改变前：', store.state);
+  next(fn, payload);
+  console.log('改变后：', store.state);
   console.groupEnd();
 };
 //使用Store注册store  第一个参数为控制器对象，第二个参数为中间件数组
@@ -84,6 +95,8 @@ const mapMethods = methods => ({
   addCount: methods.addCount,
   subtractCount: methods.subtractCount,
   asyncAddCount: methods.asyncAddCount,
+  //v0.3.2 增加了自带async的方法的loading
+  loading: state.loading.asyncAddCount || false, //当使用async后自动生成的loading   loading.xxxName
 });
 const pageConfig = {
   //some config
@@ -95,7 +108,7 @@ Page(orm(mapState, mapMethods)(pageConfig));
 #### 在 page/index.wxml 中
 
 ```html
-<view>{{count}}</view>
+<view>{{loading ? "loading..." : count}}</view>
 <view bindtap="addCount">count + 1</view>
 <view bindtap="asyncAddCount">async count + 1</view>
 <view bindtap="subtractCount">count - 1</view>

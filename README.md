@@ -12,7 +12,10 @@
 
 wechat state management
 
-> 本次 v0.3.2
+> v0.3.3
+> 修复 onload 在注入 state 之前执行出现的 bug
+
+> v0.3.2
 > 继续优化了 orm 和 ormComp 的性能，以及加入 loading
 
 ### 特点
@@ -137,3 +140,7 @@ const compConfig = {
 
 Component(ormComp(mapState, mapMethods)(compConfig));
 ```
+
+## 开源协议
+
+MIT

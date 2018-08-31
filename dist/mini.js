@@ -15,18 +15,19 @@ export const orm = (mapState, mapMethods) => pageConfig => {
   } = pageConfig;
 
   function onLoad(options) {
-    update = function(options) {
+    update = function(options, cb) {
       const state = store.state;
       const newState = mapState(state, options);
       if (!equal(oldState, newState)) {
-        this.setData(newState);
+        this.setData(newState, () => {
+          cb && cb(options);
+        });
         oldState = newState;
       }
     }.bind(this, options);
 
     store.listen(update);
-    update.call(this, options);
-    _onLoad.call(this, options);
+    update.call(this, _onLoad.bind(this));
   }
 
   function onShow() {
@@ -34,8 +35,7 @@ export const orm = (mapState, mapMethods) => pageConfig => {
 
     __isHide__ = false;
     store.listen(update);
-    update.call(this);
-    _onShow.call(this);
+    update.call(this, _onShow.bind(this));
   }
 
   function onHide() {
@@ -71,18 +71,19 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
   } = compConfig;
 
   function ready() {
-    update = function() {
+    update = function(cb) {
       const state = store.state;
       const newState = mapState(state);
       if (!equal(oldState, newState)) {
-        this.setData(newState);
+        this.setData(newState, () => {
+          cb && cb();
+        });
         oldState = newState;
       }
     }.bind(this);
 
     store.listen(update);
-    update.call(this);
-    _ready.call(this);
+    update.call(this, _ready.bind(this));
   }
 
   function detached() {

@@ -12,12 +12,6 @@
 
 wechat state management
 
-> v0.3.3
-> 修复 onload 在注入 state 之前执行出现的 bug
-
-> v0.3.2
-> 继续优化了 orm 和 ormComp 的性能，以及加入 loading
-
 ### 特点
 
 - 支持中间件
@@ -98,7 +92,7 @@ const mapMethods = methods => ({
   addCount: methods.addCount,
   subtractCount: methods.subtractCount,
   asyncAddCount: methods.asyncAddCount,
-  //v0.3.2 增加了自带async的方法的loading
+  //自带async的方法的loading
   loading: state.loading.asyncAddCount || false, //当使用async后自动生成的loading   loading.xxxName
 });
 const pageConfig = {
@@ -116,8 +110,6 @@ Page(orm(mapState, mapMethods)(pageConfig));
 <view bindtap="asyncAddCount">async count + 1</view>
 <view bindtap="subtractCount">count - 1</view>
 ```
-
-v0.2.0 增加了映射到 Component 的方法 ormComp
 
 #### 在 一个 components 的 js 文件中
 

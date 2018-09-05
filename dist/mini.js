@@ -1,10 +1,12 @@
 import equal from './equal.js';
 
+const { assign } = Object;
 //////////////// orm  用于page 映射methods以及state
 export const orm = (mapState, mapMethods) => pageConfig => {
   const app = getApp();
   const store = app.store;
   let __isHide__ = false;
+  let __isLoad__ = false;
   let update;
   let oldState;
   const {
@@ -18,9 +20,12 @@ export const orm = (mapState, mapMethods) => pageConfig => {
     update = function(options, cb) {
       const state = store.state;
       const newState = mapState(state, options);
-      if (!equal(oldState, newState)) {
+      if (!equal(oldState, newState) || (!__isLoad__ || !__isHide__)) {
         this.setData(newState, () => {
-          cb && cb(options);
+          if (cb) {
+            cb(options);
+            __isLoad__ = true;
+          }
         });
         oldState = newState;
       }
@@ -46,10 +51,11 @@ export const orm = (mapState, mapMethods) => pageConfig => {
 
   function onUnload() {
     _onUnload.call(this);
+    __isLoad__ = false;
     store.unListen(update);
   }
 
-  return Object.assign({}, pageConfig, mapMethods(app.store.methods), {
+  return assign({}, pageConfig, mapMethods(app.store.methods), {
     onLoad,
     onUnload,
     onShow,
@@ -62,6 +68,7 @@ export const orm = (mapState, mapMethods) => pageConfig => {
 export const ormComp = (mapState, mapMethods) => compConfig => {
   const app = getApp();
   const store = app.store;
+  let __isReady__ = false;
   let update;
   let oldState;
 
@@ -74,7 +81,7 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     update = function(cb) {
       const state = store.state;
       const newState = mapState(state);
-      if (!equal(oldState, newState)) {
+      if (!equal(oldState, newState) || !__isReady__) {
         this.setData(newState, () => {
           cb && cb();
         });
@@ -88,10 +95,11 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
 
   function detached() {
     _detached.call(this);
+    __isReady__ = false;
     store.unListen(update);
   }
-  return Object.assign({}, compConfig, {
-    methods: Object.assign(compConfig.methods, mapMethods(app.store.methods)),
+  return assign({}, compConfig, {
+    methods: assign(compConfig.methods, mapMethods(app.store.methods)),
     ready,
     detached,
   });
@@ -99,6 +107,5 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
 
 ////////////////////////////////////////////////////////////////
 //////////////// Provider
-export const Provider = store => appConfig =>
-  Object.assign({}, appConfig, { store });
+export const Provider = store => appConfig => assign({}, appConfig, { store });
 ////////////////////////////////////////////////////////////////

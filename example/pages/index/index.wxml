@@ -1,0 +1,5 @@
+<!--index.wxml-->
+<view class="count">{{loading ? "loading..." : count}}</view>
+<button bindtap="addCount">count + 1</button>
+<button bindtap="asyncAddCount">async count + 1</button>
+<button bindtap="subtractCount">count - 1</button>

@@ -1,6 +1,4 @@
-//app.js
-import { Store, Provider, regeneratorRuntime } from 'wenaox';
-
+import { Store, regeneratorRuntime } from 'wenaox';
 const state = {
   count: 0,
 };
@@ -24,6 +22,7 @@ const methods = {
     },
   },
 };
+
 //一个打印state改变前后的log中间件
 const log = store => fn => next => payload => {
   console.group('改变前：', store.state);
@@ -34,7 +33,4 @@ const log = store => fn => next => payload => {
 //使用Store注册store  第一个参数为控制器对象，第二个参数为中间件数组
 const store = new Store({ state, methods }, [log]);
 
-const appConfig = {
-  //some config
-};
-App(Provider(store)(appConfig));
+export default store;

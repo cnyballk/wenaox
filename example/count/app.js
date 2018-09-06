@@ -1,5 +1,5 @@
 //app.js
-import { Provider, regeneratorRuntime } from 'wenaox';
+import { Provider } from 'wenaox';
 import store from './models/store';
 
 const appConfig = {

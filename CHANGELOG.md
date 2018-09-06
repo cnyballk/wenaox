@@ -1,5 +1,10 @@
 wenaox 的更新记录
 
+- v0.3.5
+  修复 [#1](https://github.com/cnyballk/wenaox/issues/1)由于 breakUpContros 导致的 issue
+  引入 regeneratorRuntime
+  增加 [example](https://github.com/cnyballk/wenaox/tree/master/dist)
+
 - 0.3.4
   修复了 onload 在 orm 注入 state 之前加载的 bug
 

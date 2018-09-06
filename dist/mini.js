@@ -1,5 +1,6 @@
 import equal from './equal.js';
 
+const { assign } = Object;
 //////////////// orm  用于page 映射methods以及state
 export const orm = (mapState, mapMethods) => pageConfig => {
   const app = getApp();
@@ -54,7 +55,7 @@ export const orm = (mapState, mapMethods) => pageConfig => {
     store.unListen(update);
   }
 
-  return Object.assign({}, pageConfig, mapMethods(app.store.methods), {
+  return assign({}, pageConfig, mapMethods(app.store.methods), {
     onLoad,
     onUnload,
     onShow,
@@ -97,8 +98,8 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     __isReady__ = false;
     store.unListen(update);
   }
-  return Object.assign({}, compConfig, {
-    methods: Object.assign(compConfig.methods, mapMethods(app.store.methods)),
+  return assign({}, compConfig, {
+    methods: assign(compConfig.methods, mapMethods(app.store.methods)),
     ready,
     detached,
   });
@@ -106,6 +107,5 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
 
 ////////////////////////////////////////////////////////////////
 //////////////// Provider
-export const Provider = store => appConfig =>
-  Object.assign({}, appConfig, { store });
+export const Provider = store => appConfig => assign({}, appConfig, { store });
 ////////////////////////////////////////////////////////////////

@@ -1,4 +1,5 @@
 //////////////////// util
+const { assign, keys } = Object;
 const toType = obj => {
   return {}.toString
     .call(obj)
@@ -16,16 +17,14 @@ export const isPromise = (x = {}) => {
 };
 export const breakUpContros = c => {
   if (c.state) {
-    return {
-      state: Object.assign(c.state, { loading: {} }),
-      syncs: c.syncs,
-      asyncs: c.asyncs,
-    };
+    return assign(c, {
+      state: assign({}, c.state, { loading: {} }),
+    });
   }
   const state = {},
     methods = {};
-  Object.keys(c).forEach(i => {
-    state[i] = Object.assign(c[i].state, { loading: {} });
+  keys(c).forEach(i => {
+    state[i] = assign(c[i].state, { loading: {} });
     methods[i] = {};
     methods[i].syncs = c[i].syncs || {};
     methods[i].asyncs = c[i].asyncs || {};

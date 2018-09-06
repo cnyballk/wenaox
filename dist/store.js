@@ -1,7 +1,5 @@
 import produce from './immer.js';
 import { breakUpContros, isEmptyArray, isPromise } from './util';
-console.log({ breakUpContros, isEmptyArray, isPromise });
-
 //////////////// Store
 export class Store {
   constructor(contros, middlewares) {
@@ -54,7 +52,6 @@ export class Store {
       // 使用中间件
       c[syncs] = this.bindMiddlewares ? this.bindMiddlewares(next) : next;
     }
-
     //异步
     for (const async in methods.asyncs) {
       c[async] = payload => {

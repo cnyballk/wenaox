@@ -5,7 +5,7 @@ wenaox 的更新记录
 
   引入 regeneratorRuntime
 
-  增加 [example](https://github.com/cnyballk/wenaox/tree/master/dist)
+  增加 [example](https://github.com/cnyballk/wenaox/tree/master/example)
 
 * 0.3.4
   修复了 onload 在 orm 注入 state 之前加载的 bug

@@ -3,5 +3,12 @@
   "version": "0.3.5",
   "description": "WeChat state management",
   "miniprogram": "dist",
-  "main": "dist/index.js"
+  "main": "dist/index.js",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  },
+  "devDependencies": {
+    "vuepress": "^0.14.2"
+  }
 }

@@ -1,4 +1,4 @@
-wenaox 的更新记录
+# wenaox 更新记录
 
 - v0.3.5
   修复 [#1](https://github.com/cnyballk/wenaox/issues/1)由于 breakUpContros 导致的 issue

@@ -31,7 +31,7 @@ yarn add wenaox
 
 ## Example
 
-[简单的加减](https://github.com/cnyballk/wenaox/tree/master/example/count)
+[计数器](https://github.com/cnyballk/wenaox/tree/master/example/count)
 
 ### Change Log
 

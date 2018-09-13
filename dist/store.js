@@ -37,8 +37,7 @@ export class Store {
         this.middlewares &&
         this.middlewares
           .map(fn => fn(this))
-          .map(fn => fn(methods.syncs[syncs]))
-          .reduce((a, b) => p => a(b(p)));
+          .reduce((a, b) => (f, p) => a(b(f, p)));
       // 留存next函数
       const next = (sync, payload) => {
         const newState = produce(sync).bind(
@@ -50,7 +49,9 @@ export class Store {
         this.listeners.forEach(fn => fn());
       };
       // 使用中间件
-      c[syncs] = this.bindMiddlewares ? this.bindMiddlewares(next) : next;
+      c[syncs] = this.bindMiddlewares
+        ? this.bindMiddlewares(next).bind(this, methods.syncs[syncs])
+        : next;
     }
     //异步
     for (const async in methods.asyncs) {

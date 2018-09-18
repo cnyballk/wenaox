@@ -64,7 +64,9 @@ export class Store {
 
         if (isPromise(p)) {
           this._toggleLoading(async, method, true);
-          p.finally(() => {
+          p.then(() => {
+            this._toggleLoading(async, method, false);
+          }).catch(() => {
             this._toggleLoading(async, method, false);
           });
         }

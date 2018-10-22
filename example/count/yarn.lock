@@ -2,6 +2,6 @@
 # yarn lockfile v1
 
 
-wenaox@^0.3.5:
-  version "0.3.5"
-  resolved "http://registry.npm.taobao.org/wenaox/download/wenaox-0.3.5.tgz#989c5c34437b24b0bf3323d2772fd2b0e7673034"
+wenaox@^0.3.8:
+  version "0.3.8"
+  resolved "http://registry.npm.taobao.org/wenaox/download/wenaox-0.3.8.tgz#afaaf9046c92683c3c3adbddb7e85ddb71628fef"

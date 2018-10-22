@@ -24,13 +24,13 @@ const methods = {
 };
 
 //一个打印state改变前后的log中间件
-const log = store =>  next => (fn,payload) => {
+const log = store => next => (fn, payload) => {
   console.group('改变前：', store.state);
   next(fn, payload);
   console.log('改变后：', store.state);
   console.groupEnd();
 };
 //使用Store注册store  第一个参数为控制器对象，第二个参数为中间件数组
-const store = new Store({ state, methods }, [log]);
+const store = new Store({ state, methods });
 
 export default store;

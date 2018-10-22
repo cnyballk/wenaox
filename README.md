@@ -35,9 +35,9 @@ yarn add wenaox
 
 ### Change Log
 
-- v0.3.6
-
-  修复多个中间件导致的参数传递错误
+- v0.4.0
+  修复不使用中间导致 next 的函数错误
+  增加 ormCom 的生命周期兼容以及监听父页面的 show 和 hide
 
 * [更多](https://cnyballk.github.io/wenaox/CHANGELOG.html)
 

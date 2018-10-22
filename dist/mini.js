@@ -69,28 +69,49 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
   const app = getApp();
   const store = app.store;
   let __isReady__ = false;
+  let __isHide__ = false;
   let update;
   let oldState;
-
   const {
-    ready: _ready = () => {},
-    detached: _detached = () => {},
+    ready: _ready1,
+    detached: _detached1,
+    lifetimes: {
+      ready: _ready2 = () => {},
+      detached: _detached2 = () => {},
+    } = {},
+    pageLifetimes: { show: _onShow = () => {}, hide: _onHide = () => {} } = {},
   } = compConfig;
+  const _ready = _ready1 || _ready2;
+  const _detached = _detached1 || _detached2;
 
   function ready() {
     update = function(cb) {
       const state = store.state;
       const newState = mapState(state);
-      if (!equal(oldState, newState) || !__isReady__) {
+      if (!equal(oldState, newState) || !__isReady__ || __isHide__) {
         this.setData(newState, () => {
-          cb && cb();
+          if (cb) {
+            cb();
+            __isReady__ = true;
+          }
         });
         oldState = newState;
       }
     }.bind(this);
-
     store.listen(update);
     update.call(this, _ready.bind(this));
+  }
+  function show() {
+    if (!__isHide__) return;
+    __isHide__ = false;
+    store.listen(update);
+    update.call(this, _onShow.bind(this));
+  }
+
+  function hide() {
+    __isHide__ = true;
+    _onHide.call(this);
+    store.unListen(update);
   }
 
   function detached() {
@@ -99,9 +120,15 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     store.unListen(update);
   }
   return assign({}, compConfig, {
-    methods: assign(compConfig.methods, mapMethods(app.store.methods)),
-    ready,
-    detached,
+    methods: assign(compConfig.methods || {}, mapMethods(app.store.methods)),
+    pageLifetimes: assign(compConfig.pageLifetimes || {}, {
+      show,
+      hide,
+    }),
+    lifetimes: assign(compConfig.lifetimes || {}, {
+      ready,
+      detached,
+    }),
   });
 };
 

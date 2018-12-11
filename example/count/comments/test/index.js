@@ -13,5 +13,6 @@ const mapMethods = methods => ({
 
 const compConfig = {
   data: {},
+ 
 };
 Component(ormComp(mapState, mapMethods)(compConfig));

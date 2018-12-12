@@ -13,11 +13,12 @@ const mapMethods = methods => ({
 const pageConfig = {
   //some config
   onLoad(options) {
-    console.log(options)
-    console.log('load')
+    console.log(options);
+    console.log('load');
+    console.log(this.data.count);
   },
   onShow() {
-    console.log('show')
+    console.log('show');
   },
 };
 

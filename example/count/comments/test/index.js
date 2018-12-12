@@ -13,6 +13,30 @@ const mapMethods = methods => ({
 
 const compConfig = {
   data: {},
- 
+  ready() {
+    console.log('ready1');
+  },
+  detached() {
+    console.log('detached1');
+  },
+  lifetimes: {
+    ready() {
+      console.log('====================================');
+      console.log(this.data.count);
+      console.log('====================================');
+      console.log('ready2');
+    },
+    detached() {
+      console.log('detached2');
+    },
+  },
+  pageLifetimes: {
+    show() {
+      console.log('show2');
+    },
+    hide() {
+      console.log('hide2');
+    },
+  },
 };
 Component(ormComp(mapState, mapMethods)(compConfig));

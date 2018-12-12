@@ -1,6 +1,7 @@
 # Wenaox
 
 [![NPM version][npm-image]][npm-url]
+
 [![npm download][download-image]][download-url]
 
 [npm-image]: https://img.shields.io/npm/v/wenaox.svg?style=flat-square
@@ -35,9 +36,8 @@ yarn add wenaox
 
 ### Change Log
 
-- v0.4.0
-  修复不使用中间导致 next 的函数错误
-  增加 ormCom 的生命周期兼容以及监听父页面的 show 和 hide
+- v0.4.2
+  优化生命周期
 
 * [更多](https://cnyballk.github.io/wenaox/CHANGELOG.html)
 

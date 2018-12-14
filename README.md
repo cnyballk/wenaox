@@ -36,7 +36,7 @@ yarn add wenaox
 
 ### Change Log
 
-- v0.4.2
+- v0.4.3
   优化生命周期
 
 * [更多](https://cnyballk.github.io/wenaox/CHANGELOG.html)

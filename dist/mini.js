@@ -51,6 +51,8 @@ export const orm = (mapState, mapMethods) => pageConfig => {
   function onUnload() {
     __isLoad__ = false;
     _onUnload.call(this);
+    store.unListen(update);
+    oldState = {};
   }
   return assign({}, pageConfig, mapMethods(app.store.methods), {
     onLoad,
@@ -69,8 +71,11 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
   let update;
   let oldState;
   const {
+    detached: _detached1 = () => {},
+    lifetimes: { detached: _detached2 } = {},
     pageLifetimes: { show: _onShow = () => {}, hide: _onHide = () => {} } = {},
   } = compConfig;
+  const _detached = _detached1 || _detached2;
   function show() {
     update = function(cb) {
       if (!__isHide__) {
@@ -86,6 +91,7 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     }.bind(this);
     __isHide__ = false;
     store.listen(update);
+
     update.call(this, _onShow.bind(this));
   }
 
@@ -94,11 +100,19 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     _onHide.call(this);
     store.unListen(update);
   }
+  function detached() {
+    _detached.call(this);
+    store.unListen(update);
+    oldState = {};
+  }
   return assign({}, compConfig, {
     methods: assign(compConfig.methods || {}, mapMethods(app.store.methods)),
     pageLifetimes: assign(compConfig.pageLifetimes || {}, {
       show,
       hide,
+    }),
+    lifetimes: assign(compConfig.lifetimes || {}, {
+      detached,
     }),
   });
 };

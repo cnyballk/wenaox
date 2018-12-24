@@ -31,6 +31,6 @@ const log = store => next => (fn, payload) => {
   console.groupEnd();
 };
 //使用Store注册store  第一个参数为控制器对象，第二个参数为中间件数组
-const store = new Store({ state, methods });
+const store = new Store({ state, methods }, [log]);
 
 export default store;

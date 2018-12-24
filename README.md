@@ -36,8 +36,8 @@ yarn add wenaox
 
 ### Change Log
 
-- v0.4.3
-  优化生命周期
+- v0.4.4
+  修复更换场景值没有触发到 load、show 生命周期
 
 * [更多](https://cnyballk.github.io/wenaox/CHANGELOG.html)
 

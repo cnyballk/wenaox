@@ -50,6 +50,7 @@ export const orm = (mapState, mapMethods) => pageConfig => {
   }
   function onUnload() {
     __isLoad__ = false;
+    __isHide__ = false;
     _onUnload.call(this);
     store.unListen(update);
     oldState = {};
@@ -101,6 +102,7 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     store.unListen(update);
   }
   function detached() {
+    __isHide__ = false;
     _detached.call(this);
     store.unListen(update);
     oldState = {};

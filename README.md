@@ -36,6 +36,9 @@ yarn add wenaox
 
 ### Change Log
 
+- v0.5
+  [优化]优化 mapState 性能 减少不必要的更新
+  [修复]分包后的子页面第二次无法触发 onShow 事件 #4
 - v0.4.4
   修复更换场景值没有触发到 load、show 生命周期
 

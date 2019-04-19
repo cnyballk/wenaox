@@ -1,6 +1,16 @@
 import equal from './equal.js';
 
 const { assign } = Object;
+const deleteEquleKey = (oldState, newState) => {
+  const deleteKeys = {};
+  for (let i in oldState) {
+    if (equal(oldState[i], newState[i])) {
+      deleteKeys[i] = newState[i];
+      delete newState[i];
+    }
+  }
+  return deleteKeys;
+};
 //////////////// orm  用于page 映射methods以及state
 export const orm = (mapState, mapMethods) => pageConfig => {
   const app = getApp();
@@ -21,16 +31,19 @@ export const orm = (mapState, mapMethods) => pageConfig => {
       if (!__isHide__) {
         const state = store.state;
         const newState = mapState(state, options);
-        if (!equal(oldState, newState)) {
-          this.setData(newState, () => {
-            cb && cb(options);
-            if (!__isLoad__) {
-              __isLoad__ = true;
-              _onShow.call(this);
-            }
-          });
-        } else {
+        function callback() {
           cb && cb(options);
+          if (!__isLoad__) {
+            __isLoad__ = true;
+            _onShow.call(this);
+          }
+        }
+        const deleteKeys = deleteEquleKey(oldState, newState);
+        if (JSON.stringify(newState) !== '{}') {
+          this.setData(newState, callback);
+          oldState = assign(newState, deleteKeys);
+        } else {
+          callback();
         }
       }
     }.bind(this, options);
@@ -82,9 +95,10 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
       if (!__isHide__) {
         const state = store.state;
         const newState = mapState(state);
-        if (!equal(oldState, newState)) {
+        const deleteKeys = deleteEquleKey(oldState, newState);
+        if (JSON.stringify(newState) !== '{}') {
           this.setData(newState, () => cb && cb());
-          oldState = newState;
+          oldState = assign(newState, deleteKeys);
         } else {
           cb && cb();
         }

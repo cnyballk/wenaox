@@ -1,6 +1,7 @@
 import { Store, regeneratorRuntime } from 'wenaox';
 const state = {
   count: 0,
+  count2: 2,
 };
 const methods = {
   syncs: {
@@ -9,6 +10,9 @@ const methods = {
     },
     subtractCount(state, payload) {
       state.count = state.count - 1;
+    },
+    addCount2(state, payload) {
+      state.count2 = state.count2 + 1;
     },
   },
   asyncs: {

@@ -1,7 +1,9 @@
 <!--index.wxml-->
 page:
+<input type="text" value="{{count2}}"/>
 <view class="count">{{loading ? "loading..." : count}}</view>
 <button disabled="{{loading}}" bindtap="addCount">count + 1</button>
+<button disabled="{{loading}}" bindtap="addCount2">count2 + 1</button>
 <button disabled="{{loading}}" bindtap="asyncAddCount">async count + 1</button>
 <button disabled="{{loading}}" bindtap="subtractCount">count - 1</button>
 

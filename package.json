@@ -1,6 +1,6 @@
 {
   "name": "wenaox",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "description": "WeChat state management",
   "miniprogram": "dist",
   "main": "dist/index.js",
@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "vuepress": "^0.14.2"
+  },
+  "dependencies": {
+    "wenaox": "^0.4.4"
   }
 }

@@ -1,0 +1,2 @@
+<!--pages/index2/index.wxml-->
+<view class="count">{{loading ? "loading..." : count}}</view>

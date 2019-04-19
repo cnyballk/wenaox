@@ -4,3 +4,7 @@
 <button disabled="{{loading}}" bindtap="asyncAddCount">async count + 1</button>
 <button disabled="{{loading}}" bindtap="subtractCount">count - 1</button>
 
+<navigator url="/pages/index2/index">
+	<button >跳转到index2</button>
+</navigator>
+

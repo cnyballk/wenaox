@@ -51,7 +51,7 @@ export class Store {
       // 使用中间件
       c[syncs] = this.bindMiddlewares
         ? this.bindMiddlewares(next).bind(this, methods.syncs[syncs])
-        : next;
+        : next.bind(this, methods.syncs[syncs]);
     }
     //异步
     for (const async in methods.asyncs) {

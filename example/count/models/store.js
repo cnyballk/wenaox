@@ -24,7 +24,7 @@ const methods = {
 };
 
 //一个打印state改变前后的log中间件
-const log = store => fn => next => payload => {
+const log = store => next => (fn, payload) => {
   console.group('改变前：', store.state);
   next(fn, payload);
   console.log('改变后：', store.state);

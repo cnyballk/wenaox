@@ -1,6 +1,7 @@
 # Wenaox
 
 [![NPM version][npm-image]][npm-url]
+
 [![npm download][download-image]][download-url]
 
 [npm-image]: https://img.shields.io/npm/v/wenaox.svg?style=flat-square
@@ -35,9 +36,8 @@ yarn add wenaox
 
 ### Change Log
 
-- v0.3.6
-
-  修复多个中间件导致的参数传递错误
+- v0.4.4
+  修复更换场景值没有触发到 load、show 生命周期
 
 * [更多](https://cnyballk.github.io/wenaox/CHANGELOG.html)
 

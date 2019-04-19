@@ -1,0 +1,9 @@
+/**index.wxss**/
+view.count {
+  font-size: 100rpx;
+  text-align: center;
+}
+button {
+  width: 80vw;
+  margin-bottom: 30rpx;
+}

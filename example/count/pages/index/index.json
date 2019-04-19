@@ -1,1 +1,6 @@
-{}
+{
+  "usingComponents": {
+    "testCom": "/comments/test/index",
+    "testCom2": "/comments/testLife/index"
+  }
+}

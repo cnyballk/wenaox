@@ -12,6 +12,14 @@ const mapMethods = methods => ({
 });
 const pageConfig = {
   //some config
+  onLoad(options) {
+    console.log(options);
+    console.log('pageLoad');
+    console.log(this.data.count);
+  },
+  onShow() {
+    console.log('pageShow');
+  },
 };
 
 Page(orm(mapState, mapMethods)(pageConfig));

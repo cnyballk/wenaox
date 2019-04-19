@@ -4,6 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "wenaox": "^0.3.7"
+    "wenaox": "^0.4.3"
   }
 }

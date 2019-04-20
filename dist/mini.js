@@ -19,6 +19,8 @@ export const orm = (mapState, mapMethods) => pageConfig => {
   let __isLoad__ = false;
   let update;
   let oldState;
+  let callback;
+
   const {
     onLoad: _onLoad = () => {},
     onUnload: _onUnload = () => {},
@@ -31,13 +33,13 @@ export const orm = (mapState, mapMethods) => pageConfig => {
       if (!__isHide__) {
         const state = store.state;
         const newState = mapState(state, options);
-        function callback() {
+        callback = () => {
           cb && cb(options);
           if (!__isLoad__) {
             __isLoad__ = true;
             _onShow.call(this);
           }
-        }
+        };
         const deleteKeys = deleteEquleKey(oldState, newState);
         if (JSON.stringify(newState) !== '{}') {
           this.setData(newState, callback);
@@ -84,6 +86,7 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
   let __isHide__ = false;
   let update;
   let oldState;
+
   const {
     detached: _detached1 = () => {},
     lifetimes: { detached: _detached2 } = {},

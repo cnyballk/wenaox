@@ -2,6 +2,20 @@ import { Store, regeneratorRuntime } from 'wenaox';
 const state = {
   count: 0,
   count2: 2,
+  abbarList: [
+    {
+      pagePath: '/pages/index/index',
+      text: 'index1',
+      iconPath: 'test.jpg',
+      selectedIconPath: 'test.jpg',
+    },
+    {
+      pagePath: '/pages/index2/index',
+      text: 'index2',
+      iconPath: 'test.jpg',
+      selectedIconPath: 'test.jpg',
+    },
+  ],
 };
 const methods = {
   syncs: {

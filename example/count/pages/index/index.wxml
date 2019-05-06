@@ -7,14 +7,14 @@ page:
 <button disabled="{{loading}}" bindtap="asyncAddCount">async count + 1</button>
 <button disabled="{{loading}}" bindtap="subtractCount">count - 1</button>
 
-<navigator url="/pages/index2/index">
-	<button >跳转到index2</button>
+<navigator url="/pages/index3/index" >
+	<button >跳转到index3</button>
 </navigator>
 
 
 
 comments:
-<testCom />
+<!-- <testCom />
 
 
-<testCom2/>
+<testCom2/> -->

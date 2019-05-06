@@ -1,55 +1,55 @@
 {
-  "description": "项目配置文件。",
-  "packOptions": {
-    "ignore": []
-  },
-  "setting": {
-    "urlCheck": false,
-    "es6": true,
-    "postcss": true,
-    "minified": true,
-    "newFeature": true,
-    "nodeModules": true,
-    "uglifyFileName": true
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.4.2",
-  "appid": "wxd6a8a642faee105c",
-  "projectname": "example",
-  "isGameTourist": false,
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "plugin": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "currentL": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": 1,
-      "list": [
-        {
-          "id": -1,
-          "name": "test",
-          "pathName": "pages/index/index",
-          "query": "a=1"
-        },
-        {
-          "id": 1,
-          "name": "test11",
-          "pathName": "pages/test",
-          "query": ""
-        }
-      ]
-    }
-  }
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"nodeModules": true,
+		"uglifyFileName": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.6.6",
+	"appid": "wxd6a8a642faee105c",
+	"projectname": "example",
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 1,
+			"list": [
+				{
+					"id": -1,
+					"name": "test",
+					"pathName": "pages/index/index",
+					"query": "a=1"
+				},
+				{
+					"id": 1,
+					"name": "test11",
+					"pathName": "pages/test",
+					"query": ""
+				}
+			]
+		}
+	}
 }

@@ -1,9 +1,29 @@
 {
-  "pages": ["pages/index/index", "pages/index2/index", "pages/test"],
+  "pages": [
+    "pages/index/index",
+    "pages/index2/index",
+    "pages/test",
+    "pages/index3/index"
+  ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "custom": true,
+    "selectedColor": "#FE941A",
+    "color": "#ccc",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "index1"
+      },
+      {
+        "pagePath": "pages/index2/index",
+        "text": "index2"
+      }
+    ]
   }
 }

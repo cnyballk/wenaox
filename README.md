@@ -35,12 +35,9 @@ yarn add wenaox
 [计数器](https://github.com/cnyballk/wenaox/tree/master/example/count)
 
 ### Change Log
-
-- v0.5
-  [优化]优化 mapState 性能 减少不必要的更新
-  [修复]分包后的子页面第二次无法触发 onShow 事件 #4
-- v0.4.4
-  修复更换场景值没有触发到 load、show 生命周期
+- v1.0.0
+  [兼容]自定义tabbar的custom-tab-bar组件的数据绑定
+  [修复]由于 newState 导致的生命周期的重复
 
 * [更多](https://cnyballk.github.io/wenaox/CHANGELOG.html)
 

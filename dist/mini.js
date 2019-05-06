@@ -33,11 +33,11 @@ export const orm = (mapState, mapMethods) => pageConfig => {
       if (!__isHide__) {
         const state = store.state;
         const newState = mapState(state, options);
-        callback = () => {
+        callback = isSync => {
           cb && cb(options);
           if (!__isLoad__) {
             __isLoad__ = true;
-            _onShow.call(this);
+            !isSync && _onShow.call(this);
           }
         };
         const deleteKeys = deleteEquleKey(oldState, newState);
@@ -45,7 +45,7 @@ export const orm = (mapState, mapMethods) => pageConfig => {
           this.setData(newState, callback);
           oldState = assign(newState, deleteKeys);
         } else {
-          callback();
+          callback(true);
         }
       }
     }.bind(this, options);
@@ -86,15 +86,21 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
   let __isHide__ = false;
   let update;
   let oldState;
-
   const {
-    detached: _detached1 = () => {},
-    lifetimes: { detached: _detached2 } = {},
+    ready: _attached1,
+    detached: _detached1,
+    lifetimes: { detached: _detached2, attached: _attached2 } = {},
     pageLifetimes: { show: _onShow = () => {}, hide: _onHide = () => {} } = {},
   } = compConfig;
-  const _detached = _detached1 || _detached2;
-  function show() {
+  const _detached = _detached1 || _detached2 || (() => {});
+  const _attached = _attached1 || _attached2 || (() => {});
+  function attached() {
+    if ('custom-tab-bar' === this.is.split('/')[0]) show.call(this, true);
+    _attached.call(this);
+  }
+  function show(isCustomTabBar) {
     update = function(cb) {
+      isCustomTabBar && (oldState = void 666);
       if (!__isHide__) {
         const state = store.state;
         const newState = mapState(state);
@@ -109,7 +115,6 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     }.bind(this);
     __isHide__ = false;
     store.listen(update);
-
     update.call(this, _onShow.bind(this));
   }
 
@@ -132,6 +137,7 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     }),
     lifetimes: assign(compConfig.lifetimes || {}, {
       detached,
+      attached,
     }),
   });
 };

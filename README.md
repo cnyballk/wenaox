@@ -32,9 +32,13 @@ yarn add wenaox
 
 ## Example
 
-   一切特性均在例子中展示
+      所有特性使用方法均在例子中展示
+      性能方面：
+      1.setData 确保后台态页面停止而在重新进入前台的时候刷新数据
+      2.采取diff新旧数据，保证一次只更新最少量的数据
 
 [计数器](https://github.com/phonycode/wenaox/tree/master/example/count)
+
 
 ### Change Log
 - v1.0.0

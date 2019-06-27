@@ -32,15 +32,15 @@ yarn add wenaox
 
 ## Example
 
-[计数器](https://github.com/cnyballk/wenaox/tree/master/example/count)
+   一切特性均在例子中展示
+
+[计数器](https://github.com/phonycode/wenaox/tree/master/example/count)
 
 ### Change Log
 - v1.0.0
   [兼容]自定义tabbar的custom-tab-bar组件的数据绑定
   [修复]由于 newState 导致的生命周期的重复
 
-* [更多](https://cnyballk.github.io/wenaox/CHANGELOG.html)
-
 ### 开源协议
 
-[MIT](https://github.com/cnyballk/wenaox/blob/master/LICENSE)
+[MIT](https://github.com/phonycode/wenaox/blob/master/LICENSE)

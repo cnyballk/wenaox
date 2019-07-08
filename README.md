@@ -41,7 +41,7 @@ yarn add wenaox
 
 ### Concat
  
-<img width="200" src="https://raw.githubusercontent.com/phonycode/wenaox/master/assets/WechatIMG2.ong">
+<img width="200" src="https://raw.githubusercontent.com/phonycode/wenaox/master/assets/WechatIMG2.jpeg">
 
 
 ### Change Log

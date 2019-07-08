@@ -39,6 +39,10 @@ yarn add wenaox
 
 [计数器](https://github.com/phonycode/wenaox/tree/master/example/count)
 
+### Concat
+ 
+<img width="200" src="https://raw.githubusercontent.com/phonycode/wenaox/master/assets/WechatIMG2.ong">
+
 
 ### Change Log
 - v1.0.0

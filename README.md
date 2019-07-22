@@ -73,7 +73,7 @@ const store = new Store({ state, methods });
 
 store 中的 state 和 methods 打印如下:
 
-```json
+```js
 {
   "state": { "count": 0 },
   "methods": { "addCount": fn, "asyncAddCount": fn }
@@ -92,7 +92,7 @@ store 中的 state 和 methods 打印如下:
 
 将会 Store 对 store 的 state 和 methods 通过 contro 的变量名进行一个细化区分:
 
-```json
+```js
 {
   "state": { "controA": { "count": 0 } },
   "methods": { "controA": { "addCount": fn, "asyncAddCount": fn } }

@@ -1,6 +1,6 @@
 import { orm } from 'wenaox';
 
-const mapState = state => ({
+const mapState = (state,options) => ({
   count: state.count,
   count2: state.count2,
   //v0.3.2 增加了自带async的方法的loading

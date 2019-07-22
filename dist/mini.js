@@ -16,10 +16,9 @@ export const orm = (mapState, mapMethods) => pageConfig => {
   const app = getApp();
   const store = app.store;
   let __isHide__ = false;
-  let __isLoad__ = false;
   let update;
-  let oldState;
-  let callback;
+  let oldState = mapState(store.state);
+  let newState;
 
   const {
     onLoad: _onLoad = () => {},
@@ -31,31 +30,27 @@ export const orm = (mapState, mapMethods) => pageConfig => {
   function onLoad(options) {
     update = function(options, cb) {
       if (!__isHide__) {
-        const state = store.state;
-        const newState = mapState(state, options);
-        callback = isSync => {
-          cb && cb(options);
-          if (!__isLoad__) {
-            __isLoad__ = true;
-            !isSync && _onShow.call(this);
-          }
-        };
+        newState = mapState(store.state, options);
         const deleteKeys = deleteEquleKey(oldState, newState);
         if (JSON.stringify(newState) !== '{}') {
-          this.setData(newState, callback);
+          this.setData(newState, cb);
           oldState = assign(newState, deleteKeys);
         } else {
-          callback(true);
+          cb && cb();
         }
       }
     }.bind(this, options);
-    update.call(this, _onLoad.bind(this, options));
+    _onLoad.call(this, options);
   }
 
   function onShow() {
-    __isHide__ = false;
     store.listen(update);
-    __isLoad__ && update.call(this, _onShow.bind(this));
+    if (__isHide__) {
+      update.call(this, _onShow.bind(this));
+    } else {
+      _onShow.call(this);
+    }
+    __isHide__ = false;
   }
 
   function onHide() {
@@ -64,13 +59,13 @@ export const orm = (mapState, mapMethods) => pageConfig => {
     store.unListen(update);
   }
   function onUnload() {
-    __isLoad__ = false;
     __isHide__ = false;
     _onUnload.call(this);
     store.unListen(update);
     oldState = {};
   }
   return assign({}, pageConfig, mapMethods(app.store.methods), {
+    data: oldState,
     onLoad,
     onShow,
     onHide,
@@ -85,7 +80,7 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
   const store = app.store;
   let __isHide__ = false;
   let update;
-  let oldState;
+  let oldState = mapState(store.state);
   const {
     ready: _attached1,
     detached: _detached1,
@@ -106,16 +101,22 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
         const newState = mapState(state);
         const deleteKeys = deleteEquleKey(oldState, newState);
         if (JSON.stringify(newState) !== '{}') {
-          this.setData(newState, () => cb && cb());
+          this.setData(newState, cb);
           oldState = assign(newState, deleteKeys);
         } else {
           cb && cb();
         }
       }
     }.bind(this);
-    __isHide__ = false;
+
     store.listen(update);
-    update.call(this, _onShow.bind(this));
+
+    if (__isHide__) {
+      update.call(this, _onShow.bind(this));
+    } else {
+      _onShow.call(this);
+    }
+    __isHide__ = false;
   }
 
   function hide() {
@@ -130,6 +131,7 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     oldState = {};
   }
   return assign({}, compConfig, {
+    data: oldState,
     methods: assign(compConfig.methods || {}, mapMethods(app.store.methods)),
     pageLifetimes: assign(compConfig.pageLifetimes || {}, {
       show,

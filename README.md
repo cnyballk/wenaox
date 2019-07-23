@@ -11,7 +11,7 @@
 [renaox-url]: https://github.com/cnyballk/renaox
 [miniprogram-url]: https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html?search-key=npm
 
-一个微信小程序的共享数据的库（已有多个线上项目）
+一个轻量性能好的微信小程序的状态管理库（已有多个线上项目）
 
 - [前言](#前言)
 - [特点](#特点)
@@ -33,7 +33,7 @@
 
 ## 前言
 
-工作中在开发小程序的时候，发现组件间通讯或跨页通讯会把程序搞得混乱不堪，变得极难维护和扩展，setData 的性能不是很好，浪费很多的资源，所以我才封装了一个 wenaox 作为使用，后决定开源出来给大家使用
+工作中在开发小程序的时候，发现组件间通讯或跨页通讯会把程序搞得混乱不堪，变得极难维护和扩展，setData 的性能不是很好，浪费很多的资源，所以封装了一个 wenaox 作为使用，后决定开源出来给大家使用
 如果觉得有什么问题或者建议，欢迎提 issue 和 pr，觉得不错，可以给个 star，鼓励一下 2333
 
 ## 特点
@@ -52,7 +52,7 @@
 
 #### 安装
 
-虽然可以直接引入，但是我建议使用 npm 安装开发，将会很方便
+虽然可以直接引入，但是建议使用 npm 安装开发，将会很方便
 
 ```bash
 npm i -S wenaox
@@ -74,7 +74,7 @@ const state = {
 };
 //方法
 const methods = {
-  //修改state的方法(只允许通过syncs的犯法代码进行修改)
+  //修改state的方法(只允许通过syncs的方法进行修改)
   syncs: {
     addCount(state, payload) {
       state.count = state.count + 1;

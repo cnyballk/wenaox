@@ -46,11 +46,12 @@ export const orm = (mapState, mapMethods) => pageConfig => {
   function onShow() {
     store.listen(update);
     if (__isHide__) {
+      __isHide__ = false;
       update.call(this, _onShow.bind(this));
     } else {
       _onShow.call(this);
+      __isHide__ = false;
     }
-    __isHide__ = false;
   }
 
   function onHide() {
@@ -112,11 +113,12 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     store.listen(update);
 
     if (__isHide__) {
+      __isHide__ = false;
       update.call(this, _onShow.bind(this));
     } else {
       _onShow.call(this);
+      __isHide__ = false;
     }
-    __isHide__ = false;
   }
 
   function hide() {

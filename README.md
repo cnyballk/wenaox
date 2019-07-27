@@ -244,6 +244,8 @@ const log = store => next => (fn, payload) => {
 
 ## Change Log
 
+- v1.1.1
+  - [修复] 页面返回不更新数据
 - v1.1.0
   - [重构] data 直接绑定，增快速度
   - [不兼容] page 页中初始化 mapState 将不再提供 options 参数

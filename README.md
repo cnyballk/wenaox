@@ -244,6 +244,8 @@ const log = store => next => (fn, payload) => {
 
 ## Change Log
 
+- v1.2.0
+  - [修复] 旧 data 不初始化
 - v1.1.1
   - [修复] 页面返回不更新数据
 - v1.1.0

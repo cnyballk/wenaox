@@ -66,7 +66,7 @@ export const orm = (mapState, mapMethods) => pageConfig => {
     oldState = {};
   }
   return assign({}, pageConfig, mapMethods(app.store.methods), {
-    data: oldState,
+    data: assign(pageConfig.data || {}, oldState),
     onLoad,
     onShow,
     onHide,
@@ -133,7 +133,7 @@ export const ormComp = (mapState, mapMethods) => compConfig => {
     oldState = {};
   }
   return assign({}, compConfig, {
-    data: oldState,
+    data: assign(compConfig.data || {}, oldState),
     methods: assign(compConfig.methods || {}, mapMethods(app.store.methods)),
     pageLifetimes: assign(compConfig.pageLifetimes || {}, {
       show,

@@ -15,7 +15,7 @@ const deleteEquleKey = (oldState, newState) => {
 export const orm = (mapState, mapMethods) => pageConfig => {
   const app = getApp();
   const store = app.store;
-  let __isHide__ = false;
+  let __isHide__ = true;
   let update;
   let oldState = mapState(store.state);
   let newState;
@@ -60,7 +60,7 @@ export const orm = (mapState, mapMethods) => pageConfig => {
     store.unListen(update);
   }
   function onUnload() {
-    __isHide__ = false;
+    __isHide__ = true;
     _onUnload.call(this);
     store.unListen(update);
     oldState = {};

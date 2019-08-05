@@ -20,10 +20,11 @@
   - [安装](#安装)
   - [实例化 store](#实例化-store)
   - [在中大型小程序中的实践](#在中大型小程序中的实践)
-  - [在 app.js 中初始化](#在-app.js-中初始化)
+  - [在 app 中初始化](#在-app-中初始化)
   - [创建页面](#创建页面)
   - [在自定义组件中使用](#在自定义组件中使用)
   - [跨页面同步数据](#跨页面同步数据)
+  - [支持 async await 以及 laoding](#支持-async-await-以及-laoding)
   - [支持中间件](#支持中间件)
   - [支持小程序自定义的 tabbar 的数据更新](#支持小程序自定义的-tabbar-的数据更新)
 - [例子](#例子)
@@ -67,7 +68,7 @@ yarn add wenaox
 新建一个 store.js
 
 ```js
-import { Store, regeneratorRuntime } from 'wenaox';
+import { Store } from 'wenaox';
 //数据
 const state = {
   count: 0,
@@ -124,7 +125,7 @@ store 中的 state 和 methods 打印如下:
 }
 ```
 
-#### 在 app.js 中初始化
+#### 在 app 中初始化
 
 ```js
 //app.js
@@ -186,9 +187,13 @@ Component(ormComp(mapState, mapMethods)(compConfig));
 
 这是因为 wenaox 在页面栈中 hide 的页面不执行更新，而是等待 onshow 事件才重新进行更新，这是为了更好的**性能**！
 
-#### 支持 async/await 以及 laoding
+#### 支持 async await 以及 laoding
 
-```js
+在头部引入 regeneratorRuntime 即可使用 async/await
+
+```
+import { regeneratorRuntime } from  'wenaox'
+
 const methods = {
   // ...略
   asyncs: {

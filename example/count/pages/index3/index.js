@@ -22,9 +22,11 @@ Page({
    */
   onShow() {
     console.log('index3---onShow');
-    console.log('====================================');
-    console.log(this);
-    console.log('====================================');
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({
+        selected: 1,
+      });
+    }
   },
 
   /**

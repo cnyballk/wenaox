@@ -28,6 +28,40 @@ const methods = {
     addCount2(state, payload) {
       state.count2 = state.count2 + 1;
     },
+    /**
+     * @param {*} payload booolean
+     */
+    changeList(state, payload) {
+      state.abbarList = payload
+        ? [
+            {
+              pagePath: '/pages/index/index',
+              text: 'index1',
+              iconPath: 'test.jpg',
+              selectedIconPath: 'test.jpg',
+            },
+            {
+              pagePath: '/pages/index2/index',
+              text: 'index2',
+              iconPath: 'test.jpg',
+              selectedIconPath: 'test.jpg',
+            },
+          ]
+        : [
+            {
+              pagePath: '/pages/index/index',
+              text: 'index1',
+              iconPath: 'test.jpg',
+              selectedIconPath: 'test.jpg',
+            },
+            {
+              pagePath: '/pages/index3/index',
+              text: 'index3',
+              iconPath: 'test.jpg',
+              selectedIconPath: 'test.jpg',
+            },
+          ];
+    },
   },
   asyncs: {
     async asyncAddCount(payload, rootState) {

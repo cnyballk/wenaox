@@ -23,6 +23,10 @@
       {
         "pagePath": "pages/index2/index",
         "text": "index2"
+      },
+      {
+        "pagePath": "pages/index3/index",
+        "text": "index3"
       }
     ]
   },

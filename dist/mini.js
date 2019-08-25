@@ -44,6 +44,9 @@ export const orm = (mapState, mapMethods) => pageConfig => {
   }
 
   function onShow() {
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().__update__ && this.getTabBar().__update__();
+    }
     store.listen(update);
     if (__isHide__) {
       __isHide__ = false;
@@ -79,58 +82,61 @@ export const orm = (mapState, mapMethods) => pageConfig => {
 export const ormComp = (mapState, mapMethods) => compConfig => {
   const app = getApp();
   const store = app.store;
-  let __isHide__ = false;
-  let update;
+  let __isHide__ = true;
   let oldState = mapState(store.state);
+  let update;
   const {
-    ready: _attached1,
+    attached: _attached1,
     detached: _detached1,
     lifetimes: { detached: _detached2, attached: _attached2 } = {},
     pageLifetimes: { show: _onShow = () => {}, hide: _onHide = () => {} } = {},
   } = compConfig;
-  const _detached = _detached1 || _detached2 || (() => {});
-  const _attached = _attached1 || _attached2 || (() => {});
+  const _detached = _detached2 || _detached1 || (() => {});
+  const _attached = _attached2 || _attached1 || (() => {});
   function attached() {
-    if ('custom-tab-bar' === this.is.split('/')[0]) show.call(this, true);
+    this.__isHide__ = __isHide__;
+    this.oldState = { ...oldState };
+    if ('custom-tab-bar' === this.is.split('/')[0]) {
+      show.call(this);
+    }
     _attached.call(this);
   }
-  function show(isCustomTabBar) {
+  function show() {
     update = function(cb) {
-      isCustomTabBar && (oldState = void 666);
-      if (!__isHide__) {
+      if (!this.__isHide__) {
         const state = store.state;
         const newState = mapState(state);
-        const deleteKeys = deleteEquleKey(oldState, newState);
+        const deleteKeys = deleteEquleKey(this.oldState, newState);
         if (JSON.stringify(newState) !== '{}') {
           this.setData(newState, cb);
-          oldState = assign(newState, deleteKeys);
+          this.oldState = assign(newState, deleteKeys);
         } else {
           cb && cb();
         }
       }
     }.bind(this);
-
+    this.__update__ = update;
     store.listen(update);
 
-    if (__isHide__) {
-      __isHide__ = false;
+    if (this.__isHide__) {
+      this.__isHide__ = false;
       update.call(this, _onShow.bind(this));
     } else {
       _onShow.call(this);
-      __isHide__ = false;
+      this.__isHide__ = false;
     }
   }
 
   function hide() {
-    __isHide__ = true;
+    this.__isHide__ = true;
     _onHide.call(this);
     store.unListen(update);
   }
   function detached() {
-    __isHide__ = false;
+    this.__isHide__ = false;
     _detached.call(this);
     store.unListen(update);
-    oldState = {};
+    this.oldState = {};
   }
   return assign({}, compConfig, {
     data: assign(compConfig.data || {}, oldState),

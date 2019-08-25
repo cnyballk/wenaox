@@ -243,7 +243,8 @@ const log = store => next => (fn, payload) => {
 <img width="200" src="https://raw.githubusercontent.com/phonycode/wenaox/master/assets/WechatIMG2.jpeg">
 
 ## Change Log
-
+- v1.3.0
+  - [修复] wenaox的组件内部变量挂载在实例
 - v1.2.1
   - [修复] 当进入页面时不触发 mapState 判断
 - v1.2.0

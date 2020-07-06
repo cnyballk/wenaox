@@ -26,8 +26,8 @@ export const breakUpContros = c => {
   keys(c).forEach(i => {
     state[i] = assign(c[i].state, { loading: {} });
     methods[i] = {};
-    methods[i].syncs = c[i].syncs || {};
-    methods[i].asyncs = c[i].asyncs || {};
+    methods[i].syncs = c[i].methods.syncs || {};
+    methods[i].asyncs = c[i].methods.asyncs || {};
   });
   return { state, methods };
 };

@@ -13,24 +13,24 @@
 
 一个轻量性能好的微信小程序的状态管理库（已有多个线上项目）
 
-- [前言](#前言)
-- [特点](#特点)
-- [性能](#性能)
-- [开始](#开始)
-  - [安装](#安装)
-  - [实例化 store](#实例化-store)
-  - [在中大型小程序中的实践](#在中大型小程序中的实践)
-  - [在 app 中初始化](#在-app-中初始化)
-  - [创建页面](#创建页面)
-  - [在自定义组件中使用](#在自定义组件中使用)
-  - [跨页面同步数据](#跨页面同步数据)
-  - [支持 async await 以及 laoding](#支持-async-await-以及-laoding)
-  - [支持中间件](#支持中间件)
-  - [支持小程序自定义的 tabbar 的数据更新](#支持小程序自定义的-tabbar-的数据更新)
-- [例子](#例子)
-- [联系我](#联系我)
-- [Change Log](#change-log)
-- [开源协议](#开源协议)
+-   [前言](#前言)
+-   [特点](#特点)
+-   [性能](#性能)
+-   [开始](#开始)
+    -   [安装](#安装)
+    -   [实例化 store](#实例化-store)
+    -   [在中大型小程序中的实践](#在中大型小程序中的实践)
+    -   [在 app 中初始化](#在-app-中初始化)
+    -   [创建页面](#创建页面)
+    -   [在自定义组件中使用](#在自定义组件中使用)
+    -   [跨页面同步数据](#跨页面同步数据)
+    -   [支持 async await 以及 laoding](#支持-async-await-以及-laoding)
+    -   [支持中间件](#支持中间件)
+    -   [支持小程序自定义的 tabbar 的数据更新](#支持小程序自定义的-tabbar-的数据更新)
+-   [例子](#例子)
+-   [联系我](#联系我)
+-   [Change Log](#change-log)
+-   [开源协议](#开源协议)
 
 ## 前言
 
@@ -39,15 +39,15 @@
 
 ## 特点
 
-- 支持中间件
-- 中大型项目可多个 contro 区分模块
-- asyncs 自带 loading
-- 轻量、性能好
+-   支持中间件
+-   中大型项目可多个 contro 区分模块
+-   asyncs 自带 loading
+-   轻量、性能好
 
 ## 性能
 
-- 每次更新数据确保后台态页面停止刷新数据而在重新进入前台的时候开始
-- 采取 diff 新旧数据，保证一次只更新最少量的数据
+-   每次更新数据确保后台态页面停止刷新数据而在重新进入前台的时候开始
+-   采取 diff 新旧数据，保证一次只更新最少量的数据
 
 ## 开始
 
@@ -68,27 +68,27 @@ yarn add wenaox
 新建一个 store.js
 
 ```js
-import { Store } from 'wenaox';
+import { Store } from "wenaox";
 //数据
 const state = {
-  count: 0,
+	count: 0,
 };
 //方法
 const methods = {
-  //修改state的方法(只允许通过syncs的方法进行修改)
-  syncs: {
-    addCount(state, payload) {
-      state.count = state.count + 1;
-    },
-  },
-  //包含副作用的方法
-  asyncs: {
-    asyncAddCount(payload, rootState) {
-      setTimeout(() => {
-        this.addCount(c);
-      });
-    },
-  },
+	//修改state的方法(只允许通过syncs的方法进行修改)
+	syncs: {
+		addCount(state, payload) {
+			state.count = state.count + 1;
+		},
+	},
+	//包含副作用的方法
+	asyncs: {
+		asyncAddCount(payload, rootState) {
+			setTimeout(() => {
+				this.addCount(c);
+			});
+		},
+	},
 };
 //注册store
 const store = new Store({ state, methods });
@@ -129,11 +129,11 @@ store 中的 state 和 methods 打印如下:
 
 ```js
 //app.js
-import { Provider } from 'wenaox';
-import store from 'xxx路径/store';
+import { Provider } from "wenaox";
+import store from "xxx路径/store";
 
 const appConfig = {
-  //some config
+	//some config
 };
 App(Provider(store)(appConfig));
 ```
@@ -161,7 +161,7 @@ Page(orm(mapState, mapMethods)(pageConfig));
 
 ```
 
-- 在 page.wxml 中使用
+-   在 page.wxml 中使用
 
 ```html
 <view class="count">count</view>
@@ -225,11 +225,11 @@ wenaox 为了方便,提供了中间件的一个开发和使用,下面是一个 w
 保证流动完所有的中间件才进行更新数据
 
 ```js
-const log = store => next => (fn, payload) => {
-  console.group('改变前：', store.state);
-  next(fn, payload);
-  console.log('改变后：', store.state);
-  console.groupEnd();
+const log = (store) => (next) => (fn, payload) => {
+	console.group("改变前：", store.state);
+	next(fn, payload);
+	console.log("改变后：", store.state);
+	console.groupEnd();
 };
 ```
 
@@ -248,20 +248,23 @@ const log = store => next => (fn, payload) => {
 <img width="200" src="https://raw.githubusercontent.com/phonycode/wenaox/master/assets/WechatIMG2.jpeg">
 
 ## Change Log
-- v1.3.0
-  - [修复] wenaox的组件内部变量挂载在实例
-- v1.2.1
-  - [修复] 当进入页面时不触发 mapState 判断
-- v1.2.0
-  - [修复] 旧 data 不初始化
-- v1.1.1
-  - [修复] 页面返回不更新数据
-- v1.1.0
-  - [重构] data 直接绑定，增快速度
-  - [不兼容] page 页中初始化 mapState 将不再提供 options 参数
-- v1.0.0
-  - [兼容] 自定义 tabbar 的 custom-tab-bar 组件的数据绑定
-  - [修复] 由于 newState 导致的生命周期的重复
+
+-   v1.3.1
+    -   [修复] wenaox 的多 control 的解析
+-   v1.3.0
+    -   [修复] wenaox 的组件内部变量挂载在实例
+-   v1.2.1
+    -   [修复] 当进入页面时不触发 mapState 判断
+-   v1.2.0
+    -   [修复] 旧 data 不初始化
+-   v1.1.1
+    -   [修复] 页面返回不更新数据
+-   v1.1.0
+    -   [重构] data 直接绑定，增快速度
+    -   [不兼容] page 页中初始化 mapState 将不再提供 options 参数
+-   v1.0.0
+    -   [兼容] 自定义 tabbar 的 custom-tab-bar 组件的数据绑定
+    -   [修复] 由于 newState 导致的生命周期的重复
 
 ## 开源协议
 

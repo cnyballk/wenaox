@@ -2804,8 +2804,8 @@ hogan.js@^3.0.2:
     nopt "1.0.10"
 
 hosted-git-info@^2.1.4:
-  version "2.7.1"
-  resolved "http://registry.npm.taobao.org/hosted-git-info/download/hosted-git-info-2.7.1.tgz#97f236977bd6e125408930ff6de3eec6281ec047"
+  version "2.8.9"
+  resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
 
 html-comment-regex@^1.1.0:
   version "1.1.1"
@@ -6056,10 +6056,6 @@ webpackbar@^2.6.1:
     schema-utils "^1.0.0"
     std-env "^1.3.1"
     table "^4.0.3"
-
-wenaox@^0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/wenaox/-/wenaox-0.4.4.tgz#e9dcda088ab04f3d9c7b20ea8015bb4eab89eab9"
 
 when@~3.6.x:
   version "3.6.4"
